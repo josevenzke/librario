@@ -6,5 +6,5 @@ from rest_framework.response import Response
 
 # Create your views here.
 @api_view(['GET'])
-def teste(request):
-    return Response({'teste':123})
+def listBook(request):
+    return Response({'Books':'teste'})
