@@ -77,8 +77,12 @@ WSGI_APPLICATION = 'librario.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'librario',
+        'USER': 'jose',
+        'PASSWORD': '1415926',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
