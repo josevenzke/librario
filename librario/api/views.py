@@ -9,8 +9,8 @@ from .serializers import BookSerializer
 @api_view(['GET'])
 def listBook(request):
     books = Book.objects.all()
-    serialized_books = BookSerializer(books,many=True)
-    return Response({'Books':serialized_books.data})
+    serialized_books = BookSerializer(books,many=True).data
+    return Response({'success':True,'books':serialized_books})
 
 @api_view(['POST'])
 def addBook(request):
@@ -22,5 +22,5 @@ def addBook(request):
         return Response({'Success':False})
 
     new_book = Book.objects.create(title=title,author=author,pages=pages)
-
-    return Response({'Success':True})
+    serialized_book = BookSerializer(new_book).data
+    return Response({'success':True,'new_book':serialized_book})
