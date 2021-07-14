@@ -14,7 +14,7 @@ class Review(models.Model):
     stars = models.IntegerField()
     description = models.CharField(max_length=1000)
     recomends = models.BooleanField()
-    user_id = models.ForeignKey(User,on_delete=models.CASCADE)
-    book_id = ForeignKey(Book,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    book = ForeignKey(Book,on_delete=models.CASCADE)
     class Meta:
         db_table = 'review'
