@@ -1,7 +1,7 @@
-from rest_framework import serializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Book
+from django.contrib.auth.models import User
+from .models import Book, Review
 from .serializers import BookSerializer
 
 
@@ -24,3 +24,7 @@ def addBook(request):
     new_book = Book.objects.create(title=title,author=author,pages=pages)
     serialized_book = BookSerializer(new_book).data
     return Response({'success':True,'new_book':serialized_book})
+
+@api_view(['POST'])
+def addReview(request):
+    return Response({'success':True})
