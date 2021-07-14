@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 from .models import Book, Review
-from .serializers import BookSerializer
+from .serializers import BookSerializer,ReviewSerializer
 
 
 # Create your views here.
@@ -26,12 +26,18 @@ def addBook(request):
     return Response({'success':True,'new_book':serialized_book})
 
 @api_view(['POST'])
-def addReview(request,id_):
+def addReview(request,book_id):
     stars = request.POST.get('stars')
     description = request.POST.get('description')
     recomends = request.POST.get('recomends')
 
     if not all([stars,description,recomends]):
         return Response({'Success':False})
+    
+    user = User.objects.get(id=1)
+    book = Book.objects.get(id=book_id)
 
-    return Response({'success':True,'info':[stars,description,recomends,id_]})
+    new_review = Review.objects.create(stars=stars,description=description,recomends=recomends,user=user,book=book)
+    serialized_review = ReviewSerializer(new_review).data
+    
+    return Response({'success':True,'review':serialized_review})
