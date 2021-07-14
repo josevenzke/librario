@@ -26,5 +26,12 @@ def addBook(request):
     return Response({'success':True,'new_book':serialized_book})
 
 @api_view(['POST'])
-def addReview(request):
-    return Response({'success':True})
+def addReview(request,id_):
+    stars = request.POST.get('stars')
+    description = request.POST.get('description')
+    recomends = request.POST.get('recomends')
+
+    if not all([stars,description,recomends]):
+        return Response({'Success':False})
+
+    return Response({'success':True,'info':[stars,description,recomends,id_]})
