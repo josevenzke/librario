@@ -25,6 +25,13 @@ def addBook(request):
     serialized_book = BookSerializer(new_book).data
     return Response({'success':True,'new_book':serialized_book})
 
+@api_view(['GET'])
+def listReviewsFromBook(request,book_id):
+    reviews = Review.objects.all().filter(book=book_id)
+    serialized_reviews = ReviewSerializer(reviews,many=True).data
+
+    return Response({'success':True,'reviews':serialized_reviews})
+
 @api_view(['POST'])
 def addReview(request,book_id):
     stars = request.POST.get('stars')
