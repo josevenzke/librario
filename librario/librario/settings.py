@@ -86,12 +86,11 @@ REST_FRAMEWORK = {
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'librario',
-        'USER': 'jose',
-        'PASSWORD': '1415926',
-        'HOST': 'localhost',
-        'PORT': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'wlfthsmz',
+        'USER': 'wlfthsmz',
+        'PASSWORD': '1CdwpO7X7X6brNblvksj4fdLeAWO5nP3',
+        'HOST': 'motty.db.elephantsql.com',
     }
 }
 
