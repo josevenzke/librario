@@ -26,6 +26,14 @@ def addBook(request):
     return Response({'success':True,'new_book':serialized_book})
 
 @api_view(['GET'])
+def listReviews(request):
+    reviews = Review.objects.all()
+    serialized_reviews = ReviewSerializer(reviews,many=True).data
+
+    return Response({'success':True,'reviews':serialized_reviews})
+
+
+@api_view(['GET'])
 def listReviewsFromBook(request,book_id):
     if book_id:
         reviews = Review.objects.all().filter(book=book_id)
