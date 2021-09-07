@@ -7,7 +7,7 @@ from .serializers import BookSerializer,ReviewSerializer
 
 # Create your views here.
 @api_view(['GET'])
-def listBook(request):
+def listBooks(request):
     books = Book.objects.all()
     serialized_books = BookSerializer(books,many=True).data
     return Response({'success':True,'books':serialized_books})
@@ -27,7 +27,10 @@ def addBook(request):
 
 @api_view(['GET'])
 def listReviewsFromBook(request,book_id):
-    reviews = Review.objects.all().filter(book=book_id)
+    if book_id:
+        reviews = Review.objects.all().filter(book=book_id)
+    else:
+        reviews = Review.objects.all()
     serialized_reviews = ReviewSerializer(reviews,many=True).data
 
     return Response({'success':True,'reviews':serialized_reviews})
