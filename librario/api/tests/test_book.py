@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Book
+from api.models import Book
 # Create your tests here.
 class BookTest(TestCase):
     """ Test module for Book model """
