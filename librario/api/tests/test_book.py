@@ -9,8 +9,8 @@ class BookTest(TestCase):
         Book.objects.create(title="Assembly",author="Ygor Narkog",pages=465)
 
     def test_book_author(self):
-        book_habitos = Book.objects.get(name='Habitos Atomicos')
-        book_assembly = Book.objects.get(name='Assembly')
+        book_habitos = Book.objects.get(title='Habitos Atomicos')
+        book_assembly = Book.objects.get(title='Assembly')
         self.assertEqual(
             book_habitos.author, "James Cordan")
         self.assertEqual(
