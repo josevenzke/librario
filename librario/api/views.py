@@ -20,9 +20,12 @@ def addBook(request):
     
     if not all([title,author,pages]):
         return Response({'success':False})
+    
+    author_obj = Author.objects.get(id=int(author))
 
-    new_book = Book.objects.create(title=title,author=author,pages=pages)
+    new_book = Book.objects.create(title=title, author=author_obj, pages=pages)
     serialized_book = BookSerializer(new_book).data
+
     return Response({'success':True,'new_book':serialized_book})
 
 @api_view(['GET'])
@@ -74,7 +77,7 @@ def addReview(request,book_id):
     user = User.objects.get(id=1)
     book = Book.objects.get(id=book_id)
 
-    new_review = Review.objects.create(stars=stars,description=description,recomends=recomends,user=user,book=book)
+    new_review = Review.objects.create(stars=stars,description=description,recomends=bool(recomends),user=user,book=book)
     serialized_review = ReviewSerializer(new_review).data
     
     return Response({'success':True,'review':serialized_review})
