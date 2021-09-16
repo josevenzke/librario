@@ -3,9 +3,16 @@ from django.contrib.auth.models import User
 from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.IntegerField()
+    class Meta:
+        db_table = 'author'
+
 class Book(models.Model):
     title = models.CharField(max_length=300)
-    author = models.CharField(max_length=300)
+    author = models.ForeignKey(Author,on_delete=models.CASCADE)
     pages = models.IntegerField()
     class Meta:
         db_table = 'books'
