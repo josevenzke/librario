@@ -1,8 +1,8 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .models import Book, Review
-from .serializers import BookSerializer,ReviewSerializer
+from .models import Book, Review, Author
+from .serializers import BookSerializer,ReviewSerializer,AuthorSerializer
 
 
 # Create your views here.
@@ -19,11 +19,30 @@ def addBook(request):
     pages = request.POST.get('pages')
     
     if not all([title,author,pages]):
-        return Response({'Success':False})
+        return Response({'success':False})
 
     new_book = Book.objects.create(title=title,author=author,pages=pages)
     serialized_book = BookSerializer(new_book).data
     return Response({'success':True,'new_book':serialized_book})
+
+@api_view(['GET'])
+def listAuthors(request):
+    authors = Author.objects.all()
+    serialized_authors = AuthorSerializer(authors,many=True).data
+    return Response({'success':True,'authors':serialized_authors})
+
+@api_view(['POST'])
+def addAuthor(request):
+    name = request.POST.get('name')
+    age = request.POST.get('age')
+    
+    if not all([name,age]):
+        return Response({'success':False})
+    
+    new_author = Author.objects.create(name=name,age=age)
+    serialized_author = AuthorSerializer(new_author).data
+
+    return Response({'success':True,'author':serialized_author})
 
 @api_view(['GET'])
 def listReviews(request):
