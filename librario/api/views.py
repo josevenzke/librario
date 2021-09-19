@@ -17,9 +17,12 @@ def addBook(request):
     title = request.POST.get('title')
     author = request.POST.get('author')
     pages = request.POST.get('pages')
+    image = request.POST.get('image')
+    category = request.POST.get('category')
+    tag = request.POST.get('tag')
     
-    if not all([title,author,pages]):
-        return Response({'success':False})
+    if not all([title,author,pages,category,tag]):
+        return Response({'success':False,'Message':'params missing'})
     
     author_obj = Author.objects.get(id=int(author))
 
