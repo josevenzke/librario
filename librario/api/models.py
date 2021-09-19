@@ -10,12 +10,20 @@ class Author(models.Model):
     class Meta:
         db_table = 'author'
 
+class Tag(models.Model):
+    name = models.CharField(max_length=100)
+
 class Book(models.Model):
     title = models.CharField(max_length=300)
+    image = models.ImageField(upload_to ='books/',blank=True)
     author = models.ForeignKey(Author,on_delete=models.CASCADE)
     pages = models.IntegerField()
+    category = models.CharField(max_length=100,default=False)
+    tag = models.ManyToManyField(Tag)
     class Meta:
         db_table = 'books'
+
+
 
 class Review(models.Model):
     stars = models.IntegerField()
