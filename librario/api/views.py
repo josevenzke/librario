@@ -25,13 +25,15 @@ def addBook(request):
         return Response({'success':False,'Message':'params missing'})
     
     author_obj = Author.objects.get(id=int(author))
-    tag_obj = Tag.objects.get(id=int(tag))
-    
+
     new_book = Book.objects.create(title=title, 
                                    author=author_obj, 
                                    pages=pages,image=image)
-
-    new_book.tag.add(tag_obj)
+    
+    tag_list = tag.split(',')
+    for tag_id in tag_list:
+        tag_obj = Tag.objects.get(id=int(tag_id))
+        new_book.tags.add(tag_obj)
 
     serialized_book = BookSerializer(new_book).data
 
