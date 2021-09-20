@@ -8,5 +8,7 @@ urlpatterns = [
     path('add-author/', views.addAuthor, name='add-author'),
     path('list-reviews/', views.listReviews, name='list-reviews'),
     path('list-book-reviews/<int:book_id>/', views.listReviewsFromBook, name='list-book-reviews'),
-    path('add-review/<int:book_id>/', views.addReview, name='add-review')
+    path('add-review/<int:book_id>/', views.addReview, name='add-review'),
+    path('list-tags/', views.listTags, name='list-tags'),
+    path('add-tag/',views.addTag, name='add-tag')
 ]
