@@ -1,8 +1,9 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth.models import User
-from .models import Book, Review, Author
-from .serializers import BookSerializer,ReviewSerializer,AuthorSerializer
+
+from .models import Book, Review, Author,Tag
+from .serializers import BookSerializer,ReviewSerializer,AuthorSerializer,TagSerializer
 
 
 # Create your views here.
@@ -18,15 +19,20 @@ def addBook(request):
     author = request.POST.get('author')
     pages = request.POST.get('pages')
     image = request.POST.get('image')
-    category = request.POST.get('category')
     tag = request.POST.get('tag')
     
-    if not all([title,author,pages,category,tag]):
+    if not all([title,author,pages,tag]):
         return Response({'success':False,'Message':'params missing'})
     
     author_obj = Author.objects.get(id=int(author))
+    tag_obj = Tag.objects.get(id=int(tag))
+    
+    new_book = Book.objects.create(title=title, 
+                                   author=author_obj, 
+                                   pages=pages,image=image)
 
-    new_book = Book.objects.create(title=title, author=author_obj, pages=pages)
+    new_book.tag.add(tag_obj)
+
     serialized_book = BookSerializer(new_book).data
 
     return Response({'success':True,'new_book':serialized_book})
@@ -84,3 +90,22 @@ def addReview(request,book_id):
     serialized_review = ReviewSerializer(new_review).data
     
     return Response({'success':True,'review':serialized_review})
+
+@api_view(['GET'])
+def listTags(request):
+    tags = Tag.objects.all()
+    serialized_tags = TagSerializer(tags,many=True).data
+
+    return Response({'success':True,'tags':serialized_tags})
+
+@api_view(['POST'])
+def addTag(request):
+    name = request.POST.get('name')
+
+    if not name:
+        return Response({'success':False})
+
+    new_tag = Tag.objects.create(name=name)
+    serialized_tag = TagSerializer(new_tag).data
+
+    return Response({'success':True,'tag':serialized_tag})
