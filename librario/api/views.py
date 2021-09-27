@@ -1,8 +1,8 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.response import Response
 from django.contrib.auth.models import User
 
-from .models import Book, Review, Author,Tag
+from .models import Book, Review, Author, Tag, BooksRead
 from .serializers import UserSerializer,BookSerializer,ReviewSerializer,AuthorSerializer,TagSerializer
 
 
@@ -12,6 +12,28 @@ def listUsers(request):
     users = User.objects.all()
     serialized_users = UserSerializer(users,many=True).data
     return Response({'success':True,'users':serialized_users})
+
+@api_view(['POST'])
+@authentication_classes([])
+@permission_classes([])
+def addUser(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    email = request.POST.get('email')
+
+    if not all([username,password,email]):
+        return Response({'success':False,'Message':'params missing'})
+    
+    user = User.objects.create(username=username,
+                               password=password,
+                               email=email)
+    
+    books_list = BooksRead.objects.create(user=user)
+
+    serialized_user = UserSerializer(user).data
+
+    return Response({'success':True,'user_id':serialized_user.id})
+
 
 @api_view(['GET'])
 def listBooks(request):

@@ -16,5 +16,6 @@ urlpatterns = [
     path('add-review/<int:book_id>/', views.addReview, name='add-review'),
     path('list-tags/', views.listTags, name='list-tags'),
     path('add-tag/',views.addTag, name='add-tag'),
-    path('list-users/',views.listUsers, name='list-users')
+    path('list-users/',views.listUsers, name='list-users'),
+    path('add-user/', views.addUser, name='add-user')
 ]
