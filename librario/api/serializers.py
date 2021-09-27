@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Book, Review, Author, Tag
+from .models import Book, Review, Author, Tag, BooksRead
 from django.contrib.auth.models import User
 
 class UserSerializer(serializers.ModelSerializer):
@@ -11,6 +11,14 @@ class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
         fields = ['id', 'title', 'author', 'pages','tags']
+
+class BooksReadSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    books = BookSerializer(many=True)
+    
+    class Meta:
+        model = BooksRead
+        fields= ['user','books']
 
 class AuthorSerializer(serializers.ModelSerializer):
     class Meta:
