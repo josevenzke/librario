@@ -22,7 +22,9 @@ class Book(models.Model):
     class Meta:
         db_table = 'books'
 
-
+class BooksRead(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    books = models.ManyToManyField(Book)
 
 class Review(models.Model):
     stars = models.IntegerField()
