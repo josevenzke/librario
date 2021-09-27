@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 from .models import Book, Review, Author, Tag, BooksRead
-from .serializers import UserSerializer,BookSerializer,ReviewSerializer,AuthorSerializer,TagSerializer
+from .serializers import UserSerializer,BookSerializer,ReviewSerializer,AuthorSerializer,TagSerializer,BooksReadSerializer
 
 
 # Create your views here.
@@ -12,6 +12,7 @@ def listUsers(request):
     users = User.objects.all()
     serialized_users = UserSerializer(users,many=True).data
     return Response({'success':True,'users':serialized_users})
+
 
 @api_view(['POST'])
 @authentication_classes([])
@@ -35,11 +36,25 @@ def addUser(request):
     return Response({'success':True,'user_id':serialized_user.id})
 
 
+@api_view(['POST'])
+def addBookRead(request):
+    book_id = request.POST.get('book')
+    user_id = request.user.id
+
+    book = Book.objects.get(id=book_id)
+    print(user_id)
+    booksread_list = BooksRead.objects.get(user__id=user_id)
+    booksread_list.books.add(book)
+
+    return Response({'success': True})
+
+
 @api_view(['GET'])
 def listBooks(request):
     books = Book.objects.all()
     serialized_books = BookSerializer(books,many=True).data
     return Response({'success':True,'books':serialized_books})
+
 
 @api_view(['POST'])
 def addBook(request):
@@ -67,11 +82,13 @@ def addBook(request):
 
     return Response({'success':True,'new_book':serialized_book})
 
+
 @api_view(['GET'])
 def listAuthors(request):
     authors = Author.objects.all()
     serialized_authors = AuthorSerializer(authors,many=True).data
     return Response({'success':True,'authors':serialized_authors})
+
 
 @api_view(['POST'])
 def addAuthor(request):
@@ -85,6 +102,7 @@ def addAuthor(request):
     serialized_author = AuthorSerializer(new_author).data
 
     return Response({'success':True,'author':serialized_author})
+
 
 @api_view(['GET'])
 def listReviews(request):
@@ -104,6 +122,7 @@ def listReviewsFromBook(request,book_id):
 
     return Response({'success':True,'reviews':serialized_reviews})
 
+
 @api_view(['POST'])
 def addReview(request,book_id):
     stars = request.POST.get('stars')
@@ -121,12 +140,14 @@ def addReview(request,book_id):
     
     return Response({'success':True,'review':serialized_review})
 
+
 @api_view(['GET'])
 def listTags(request):
     tags = Tag.objects.all()
     serialized_tags = TagSerializer(tags,many=True).data
 
     return Response({'success':True,'tags':serialized_tags})
+
 
 @api_view(['POST'])
 def addTag(request):
