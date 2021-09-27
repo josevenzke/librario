@@ -3,10 +3,16 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 
 from .models import Book, Review, Author,Tag
-from .serializers import BookSerializer,ReviewSerializer,AuthorSerializer,TagSerializer
+from .serializers import UserSerializer,BookSerializer,ReviewSerializer,AuthorSerializer,TagSerializer
 
 
 # Create your views here.
+@api_view(['GET'])
+def listUsers(request):
+    users = User.objects.all()
+    serialized_users = UserSerializer(users,many=True).data
+    return Response({'success':True,'users':serialized_users})
+
 @api_view(['GET'])
 def listBooks(request):
     books = Book.objects.all()
