@@ -48,6 +48,16 @@ def addBookRead(request):
 
     return Response({'success': True})
 
+@api_view(['GET'])
+def listBooksRead(request):
+    user_id = request.user.id
+
+    books_list = BooksRead.objects.get(user__id=user_id)
+    serialized_books_list = BooksReadSerializer(books_list).data.get('books')
+
+    return Response({'books_read': serialized_books_list})
+
+
 
 @api_view(['GET'])
 def listBooks(request):

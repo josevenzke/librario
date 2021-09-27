@@ -18,5 +18,6 @@ urlpatterns = [
     path('add-tag/',views.addTag, name='add-tag'),
     path('list-users/',views.listUsers, name='list-users'),
     path('add-user/', views.addUser, name='add-user'),
-    path('add-bookread/', views.addBookRead, name='add-bookread')
+    path('add-bookread/', views.addBookRead, name='add-bookread'),
+    path('list-booksread/', views.listBooksRead, name='list-booksread')
 ]
