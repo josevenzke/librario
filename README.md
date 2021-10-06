@@ -19,6 +19,7 @@ it's capable of managing a book themed tracker/social-media webapp,
 ### Built With
 
 * [Python](https://www.python.org/)
+* [Django](https://www.djangoproject.com/)
 * [Django REST Framework](https://www.django-rest-framework.org/)
 * [JWT](https://jwt.io/)
 * [PostgreSQL](https://www.postgresql.org/)
