@@ -18,8 +18,6 @@ it's capable of managing a book themed tracker/social-media webapp,
 
 ### Built With
 
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
-
 * [Python](https://www.python.org/)
 * [Django REST Framework](https://www.django-rest-framework.org/)
 * [JWT](https://jwt.io/)
